@@ -1,0 +1,202 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Serve index page from public directory
+GET         /                                             controllers.FrontendController.index()
+
+# Serve index page from public directory. This is only for backend check, if all's good, during development
+GET         /smlp                                         controllers.HomeController.index
+
+# An example route (Prefix all API routes with apiPrefix defined in application.conf)
+GET         /smlp/summary                                 controllers.HomeController.appSummary
+
+# Login
+POST        /smlp/login                                   controllers.LoginController.login
+POST        /smlp/resetPassword                           controllers.LoginController.resetPassword
+GET         /smlp/logout                                  controllers.SessionController.logout
+GET         /smlp/validateUserSession                     controllers.SessionController.validateUserSession
+GET         /smlp/validateAdminSession                    controllers.SessionController.validateAdminSession
+
+# Routes to Surveys
+GET         /smlp/surveys                                 controllers.SurveyController.list
+POST        /smlp/saveSurvey                              controllers.SurveyController.save
+POST        /smlp/updateSurvey                            controllers.SurveyController.update
+POST        /smlp/uploadSurvey                            controllers.SurveyController.upload
+
+# Routes to Sectors
+GET         /smlp/sectorList                              controllers.SectorController.sectorList
+POST        /smlp/saveNewSector                           controllers.SectorController.saveNewSector
+POST        /smlp/updateSector                            controllers.SectorController.updateSector(sectorId: Integer)
+
+# Routes to SubSectors
+GET         /smlp/subSectorList                           controllers.SectorController.subSectorList
+POST        /smlp/saveNewSubSector                        controllers.SectorController.saveNewSubSector
+POST        /smlp/updateSubSector                         controllers.SectorController.updateSubSector(subSectorId: Integer)
+
+# Routes to the ListManager
+GET         /smlp/list/programs                           controllers.ListManagerController.programs
+GET         /smlp/list/flagCategory                       controllers.ListManagerController.getFlagCategory
+GET         /smlp/list/tpms                               controllers.ListManagerController.tpms
+GET         /smlp/list/zones                              controllers.ListManagerController.getZonesList
+GET         /smlp/list/regions                            controllers.ListManagerController.getRegionsList(zoneId: String)
+POST        /smlp/list/regions                            controllers.ListManagerController.getRegionsListFromZones(zoneId: String)
+GET         /smlp/list/districts                          controllers.ListManagerController.getDistrictsList(regionId: String)
+POST        /smlp/list/districts                          controllers.ListManagerController.getDistrictsListFromRegions(regionId: String)
+GET         /smlp/list/status                             controllers.ListManagerController.status
+GET         /smlp/list/siteSelectionStatus                controllers.ListManagerController.getSiteSelectionStatuses
+GET         /smlp/list/siteVisitStatuses                  controllers.ListManagerController.getSiteVisitStatuses
+GET         /smlp/list/activityStatuses                   controllers.ListManagerController.getActivityStatuses
+GET         /smlp/list/flags                              controllers.ListManagerController.getFlagsList
+GET         /smlp/list/flagReasons                        controllers.ListManagerController.getFlagReasonsList
+GET         /smlp/list/implementingPartners               controllers.ListManagerController.getImplementingPartnersList
+GET         /smlp/list/implementingPartnersCode           controllers.ListManagerController.getImplementingPartnersCodeList
+GET         /smlp/list/sectors                            controllers.ListManagerController.getSectorsList
+GET         /smlp/list/sectorsMonitored                   controllers.ListManagerController.getSectorsMonitoredList
+GET         /smlp/list/flagReasons                        controllers.ListManagerController.getFlagReasonsList
+GET         /smlp/list/subSectors                         controllers.ListManagerController.getSubSectorsList
+GET         /smlp/list/subSectorsFromSector               controllers.ListManagerController.getSubSectorsListFromSector(sectorId: String)
+POST        /smlp/list/subSectorsFromSectors              controllers.ListManagerController.getSubSectorsListFromSectors
+GET         /smlp/list/subSectorsFromSectors              controllers.ListManagerController.getEmptySubSectorList
+POST        /smlp/list/getReportList                      controllers.DashboardController.getSVRData
+GET         /smlp/list/monitoringYears                    controllers.ListManagerController.monitoringYearsList
+GET         /smlp/list/monitoringReportList               controllers.ListManagerController.monitoringReportList
+GET         /smlp/list/approvedSiteTags                   controllers.ListManagerController.getApprovedSiteTags
+GET         /smlp/list/approvedAndReportSiteTags          controllers.ListManagerController.getApprovedAndReportSiteTags
+GET         /smlp/list/surveyStatus                       controllers.ListManagerController.getSurveyStatus
+GET         /smlp/list/surveySupervisorByIP               controllers.ListManagerController.getSurveySupervisorByIP(ipId: String)
+GET         /smlp/list/surveyTypes                        controllers.ListManagerController.getSurveyTypes
+
+# Routes to the Unsecured Controller
+GET         /smlp/validateSetPasswordToken                controllers.UnsecuredController.validateSetPasswordToken(token : String)
+POST        /smlp/setPassword                             controllers.UnsecuredController.setPassword
+
+# Routes to smlp-mobile
+POST        /smlp/mobile/login                            controllers.odk.LoginController.login
+GET         /smlp/mobile/getSiteTags                      controllers.odk.SiteSelectionController.getSiteTags
+GET         /smlp/mobile/formList                         controllers.odk.SurveyController.formList()
+#GET         /smlp/mobile/formList                     controllers.odk.SurveyController.formList(siteTag: String )
+GET         /smlp/mobile/formXml                          controllers.odk.SurveyController.formDownload(id : String,  version : Integer)
+GET         /smlp/mobile/formManifest                     controllers.odk.SurveyController.formManifest( id: String,  version : Integer)
+GET         /smlp/mobile/downloadAttachment               controllers.odk.SurveyController.downloadAttachment( id : String,  fileName : String)
+
+# Routes to SiteSelectionController
+GET         /smlp/loadSiteSelections                      controllers.SiteSelectionController.loadSiteSelections
+GET         /smlp/createSiteSelection                     controllers.SiteSelectionController.createSiteSelection
+GET         /smlp/viewSiteSelection                       controllers.SiteSelectionController.viewSiteSelection(siteSelectionId : String)
+POST        /smlp/getSiteSelectionMasterActivities        controllers.SiteSelectionController.getSiteSelectionMasterActivities(pageNo: String)
+POST        /smlp/saveSiteSelection                       controllers.SiteSelectionController.saveSiteSelection
+POST        /smlp/updateSiteSelection                     controllers.SiteSelectionController.updateSiteSelection
+
+# Routes to the LocationContoller
+GET         /smlp/getAllZones                             controllers.LocationController.getAllZones
+GET         /smlp/getAllRegions                           controllers.LocationController.getAllRegions
+GET         /smlp/getAllDistricts                         controllers.LocationController.getAllDistricts(pageNo: String)
+#GET         /smlp/getSites                            controllers.LocationController.getSites(pageNo: String, zoneId: String, query: String)
+POST        /smlp/addZone                                 controllers.LocationController.addZone
+POST        /smlp/addRegion                               controllers.LocationController.addRegion
+POST        /smlp/addDistrict                             controllers.LocationController.addDistrict
+POST        /smlp/addSite                                 controllers.LocationController.addSite
+POST        /smlp/editZone                                controllers.LocationController.editZone
+POST        /smlp/editRegion                              controllers.LocationController.editRegion
+POST        /smlp/editDistrict                            controllers.LocationController.editDistrict
+#POST        /smlp/editSite                            controllers.LocationController.editSite
+#POST        /smlp/searchSiteByVillageName             controllers.LocationController.searchSiteByVillageName
+#POST        /smlp/searchSiteByDistrictName            controllers.LocationController.searchSiteByDistrictName
+#GET         /smlp/villagesByZone                      controllers.LocationController.filterSitesByZone(pageNo: String, zoneId: String)
+
+# Routes to dashboard, map, site report visits
+POST        /smlp/getDashboardData                        controllers.DashboardController.getDashboardData
+POST        /smlp/getMapData                              controllers.DashboardController.getMapData
+POST        /smlp/exportFilter                            controllers.DashboardController.export
+POST        /smlp/exportAndEmailFilter                    controllers.DashboardController.exportAndEmail
+GET         /smlp/mapLegend                               controllers.DashboardController.mapLegend
+
+# Routes to Master Activity Controller
+POST        /smlp/getMasterActivities                     controllers.MasterActivityController.getMasterActivities(pageNo: String)
+POST        /smlp/saveMasterActivity                      controllers.MasterActivityController.saveMasterActivity
+POST        /smlp/editMasterActivity                      controllers.MasterActivityController.editMasterActivity
+POST        /smlp/deleteMasterActivity                    controllers.MasterActivityController.deleteMasterActivity
+POST        /smlp/bulkUploadMasterActivity                controllers.MasterActivityController.bulkUploadMasterActivity
+POST        /smlp/loadMasterActivityDetails               controllers.MasterActivityController.loadMasterActivityDetails
+GET         /smlp/downloadMABulkUploadTemplate            controllers.MasterActivityController.downloadMABulkUploadTemplate
+
+# Routes to Users
+GET         /smlp/users/listUsers                         controllers.UsersController.listUsers
+GET         /smlp/users/createUser                        controllers.UsersController.createUser
+POST        /smlp/users/saveUser                          controllers.UsersController.saveUser
+POST        /smlp/users/updateUser                        controllers.UsersController.updateUser
+POST        /smlp/users/deleteUser                        controllers.UsersController.deleteUser
+POST        /smlp/users/resendPassword                    controllers.UsersController.resendPasswordEmail
+GET         /smlp/users/roles                             controllers.ListManagerController.roles
+
+#Routes to the ImplementingPartnersController
+GET         /smlp/ipController/ipList                     controllers.ImPartnersController.ipList
+POST        /smlp/ipController/saveNewIp                  controllers.ImPartnersController.saveNewIp
+POST        /smlp/ipController/updateIp                   controllers.ImPartnersController.updateIp(ipId: String)
+
+#Routes to the TPM Controller
+GET         /smlp/listTpm                                 controllers.TpmController.listTpm
+POST        /smlp/saveTpm                                 controllers.TpmController.saveTpm
+
+#Routes to the TPM Controller
+GET         /smlp/listFlagReasons                         controllers.FlagReasonController.listFlagReasons
+POST        /smlp/saveFlagReasons                         controllers.FlagReasonController.saveFlagReasons
+
+
+# Routes to the reports Controller
+
+POST        /smlp/report/getReportList                    controllers.DashboardController.getSVRData
+POST        /smlp/bulkUploadSVR                           controllers.ReportController.bulkUploadSVR
+POST        /smlp/processBulkUpload                       controllers.ReportController.processBulkUpload
+POST        /smlp/cancelBulkUpload                        controllers.ReportController.cancelBulkUpload
+GET         /smlp/report/getReportDocument                controllers.ReportController.getReportDocumentById(reportId: String)
+
+POST        /smlp/report/updateReport                     controllers.ReportController.updateReport
+POST        /smlp/report/saveReport                       controllers.ReportController.saveReport
+GET         /smlp/report/fetchReport                      controllers.ReportController.fetchReport(id: String)
+POST        /smlp/report/deleteReport                     controllers.ReportController.deleteReport
+GET         /smlp/report/getMedia                         controllers.ReportController.getMedia(filename: String)
+POST        /smlp/fileUpload                              controllers.ReportController.fileUpload
+GET         /smlp/downloadSvrTemplate                     controllers.ReportController.downloadSvrTemplate
+
+GET         /smlp/loadMonitoringReports                   controllers.ReportController.loadMonitoringReports
+GET         /smlp/createMonitoringReport                  controllers.ReportController.createMonitoringReport
+POST        /smlp/downloadStaticReport                controllers.ReportController.downloadStaticReport
+POST        /smlp/saveMonitoringReport                    controllers.ReportController.saveMonitoringReport
+POST        /smlp/monitoringReportFileUpload              controllers.ReportController.monitoringReportFileUpload
+
+GET         /smlp/deleteMonitoringReport                  controllers.ReportController.deleteMonitoringReport(id: String)
+GET         /smlp/createMonitoringYear                    controllers.ReportController.createMonitoringYear
+
+GET         /smlp/getLessonsLearned                       controllers.ReportController.getLessonsLearnedReports(pageNo: String)
+POST        /smlp/saveLessonsLearned                       controllers.ReportController.saveLessonsLearnedReport
+#POST        /smlp/editLessonsLearnedReport                controllers.ReportController.editLessonsLearnedReport(id: String)
+GET         /smlp/downloadLessonLearned                   controllers.ReportController.downloadLessonsLearnedReport(id: String)
+GET         /smlp/deleteLessonsLearnedReport              controllers.ReportController.deleteLessonsLearnedReport(id: String)
+POST        /smlp/lessonsReportFileUpload              controllers.ReportController.lessonsReportFileUpload
+
+# Routes to In-App-Messaging
+GET         /smlp/messageList                             controllers.MessageController.getMessages
+GET         /smlp/createNewMessage                        controllers.MessageController.createNewMessage
+#GET         /smlp/messageList                      controllers.MessageController.getMessages
+GET         /smlp/list/ibtciAdminMessageUserRoles         controllers.ListManagerController.ibtciAdminMessageUserRoles
+GET         /smlp/list/ipAdminMessageUserRoles            controllers.ListManagerController.ipAdminMessageUserRoles
+GET         /smlp/list/ibtciAdminMessageUsers             controllers.ListManagerController.ibtciAdminMessageUsers
+GET         /smlp/list/ipAdminMessageUsers                controllers.ListManagerController.ipAdminMessageUsers
+POST        /smlp/sendNewMessage                          controllers.MessageController.sendNewMessage
+
+#FAQ Routes
+GET         /smlp/downloadAdminManual                     controllers.FaqController.downloadAdminManual
+GET         /smlp/downloadViewManual                     controllers.FaqController.downloadViewManual
+
+
+# Route to User Tracking
+POST        /smlp/getUserActivity                         controllers.UserTrackingController.getUserActivity(pageNo: String)
+
+
+# Route to Template Generation
+POST        /smlp/downloadGeneratedTemplate               controllers.TemplateGenerationController.downloadGeneratedTemplate
+
+# Serve static assets under public directory
+GET         /*file                                        controllers.FrontendController.assetOrDefault(file)
